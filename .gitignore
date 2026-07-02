@@ -48,6 +48,9 @@ jspm_packages/
 # Output of 'npm pack'
 *.tgz
 
+# Packaged VSCode extension bundles
+*.vsix
+
 # Typescript
 *.tsbuildinfo
 

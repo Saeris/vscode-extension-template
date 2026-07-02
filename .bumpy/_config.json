@@ -3,9 +3,11 @@
   "baseBranch": "main",
   "changelog": "github",
   "githubRelease": true,
+  "allowCustomCommands": true,
   "packages": {
-    "valimock": {
-      "buildCommand": "vp pack"
+    "vscode-extension-template": {
+      "buildCommand": "vp pack && vp exec vsce package --no-dependencies",
+      "skipNpmPublish": true
     }
   }
 }

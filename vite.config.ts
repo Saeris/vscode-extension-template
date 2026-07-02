@@ -6,12 +6,21 @@ export default defineConfig({
   lint,
   fmt,
   // ── Builds (tsdown) ─────────────────────────────────────────────────
+  // VSCode loads extensions as CommonJS in its extension host, so we emit a
+  // single bundled .cjs (no .d.ts — extensions aren't consumed as a library).
+  // `alwaysBundle` pulls runtime deps into the artifact so the packaged .vsix
+  // is self-contained; add matchers here for anything the extension imports.
   pack: {
-    entry: [manifest.exports["."].import.development],
+    entry: ["src/index.ts"],
     clean: true,
-    format: [`esm`],
-    dts: true,
-    outDir: `./dist`
+    format: [`cjs`],
+    dts: false,
+    outDir: `./dist`,
+    deps: {
+      // `vscode` is provided by the host at runtime — never bundle it.
+      neverBundle: ["vscode"],
+      alwaysBundle: []
+    }
   },
   // ── Testing (Vitest) ────────────────────────────────────────────────
   test: {
